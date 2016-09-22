@@ -1,0 +1,26 @@
+{
+    "name": "apploud/translations-converter",
+    "description": "Simple extension for Nette framework that converts translations from multiple lang files in Neon syntax to one Excel file (xlsx) and vice versa.",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jan Konáš",
+            "email": "jan.konas@apploud.cz"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Apploud\\TranslationsConverter\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "kdyby/console": "^2.6",
+        "nette/di": "^2.4",
+        "nette/finder": "^2.4",
+        "nette/utils": "^2.4",
+        "phpoffice/phpexcel": "^1.8"
+    }
+}
