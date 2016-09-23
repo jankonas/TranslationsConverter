@@ -9,7 +9,6 @@
             "email": "jan.konas@apploud.cz"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Apploud\\TranslationsConverter\\": "src"
@@ -17,15 +16,18 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "kdyby/console": "^2.6",
-        "nette/di": "^2.4",
-        "nette/finder": "^2.4",
-        "nette/utils": "^2.4",
+        "kdyby/console": "^2.3",
+        "nette/di": "^2.2",
+        "nette/finder": "^2.2",
+        "nette/utils": "^2.2",
         "phpoffice/phpexcel": "^1.8"
     },
     "require-dev": {
         "nette/tester": "^1.7",
-        "nette/bootstrap": "^2.4",
-        "nette/robot-loader": "^2.4"
+        "nette/bootstrap": "^2.2",
+        "nette/robot-loader": "^2.2",
+        "nette/mail": "^2.2",
+        "tracy/tracy": "^2.2",
+        "nette/safe-stream": "^2.2"
     }
 }

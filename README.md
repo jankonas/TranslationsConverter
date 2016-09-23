@@ -1,6 +1,8 @@
 TranslationsConverter
 ======
 
+[![Build Status](https://travis-ci.org/JanKonas/TranslationsConverter.svg?branch=master)](https://travis-ci.org/JanKonas/TranslationsConverter)
+
 Simple extension for [Nette framework](https://nette.org) that converts translations from multiple lang files in [Neon syntax](https://ne-on.org) to one Excel file (xlsx) and vice versa.
 
 Installation
