@@ -4,6 +4,7 @@ namespace Apploud\TranslationsConverter\Tests;
 
 use Nette\Configurator;
 use Nette\DI\Container;
+use Symfony\Component\Console\Tester\ApplicationTester;
 use Tester;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -27,6 +28,9 @@ abstract class BaseTest extends Tester\TestCase
 
 	/** @var string */
 	protected $appDir;
+
+	/** @var ApplicationTester */
+	protected $applicationTester;
 
 	/**
 	 * This method is called before a test is executed.
@@ -63,7 +67,37 @@ abstract class BaseTest extends Tester\TestCase
 		Tester\Helpers::purge($this->tempDir);
 		rmdir($this->tempDir);
 		$this->tempDir = NULL;
+		$this->appDir = NULL;
 		$this->container = NULL;
+		$this->applicationTester = NULL;
+	}
+
+	/**
+	 * @param string $command
+	 * @param array $input
+	 * @param array $options
+	 * @return ApplicationTester
+	 */
+	protected function executeCommand($command, array $input = [], array $options = [])
+	{
+		$applicationTester = $this->getApplicationTester();
+		$applicationTester->run(['command' => $command] + $input, $options);
+		return $applicationTester;
+	}
+
+	/**
+	 * @return ApplicationTester
+	 */
+	protected function getApplicationTester()
+	{
+		if (!$this->applicationTester) {
+			$application = $this->container->getByType('Kdyby\Console\Application');
+			$application->setAutoExit(FALSE);
+			$application->add($this->container->getByType('Apploud\TranslationsConverter\Commands\ExportTranslationsCommand'));
+			$application->add($this->container->getByType('Apploud\TranslationsConverter\Commands\ImportTranslationsCommand'));
+			$this->applicationTester = new ApplicationTester($application);
+		}
+		return $this->applicationTester;
 	}
 
 }
