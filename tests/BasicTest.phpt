@@ -29,6 +29,8 @@ class BasicTest extends BaseTest
 		$output = $applicationTester->getDisplay();
 		Assert::contains('XLSX file generated successfully', $output);
 
+		unlink($this->appDir . '/lang/main.en.neon');
+
 		$applicationTester = $this->executeCommand('translations:import');
 		$output = $applicationTester->getDisplay();
 		Assert::contains('Translations imported successfully', $output);
