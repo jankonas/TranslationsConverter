@@ -56,6 +56,7 @@ class ImportTranslationsCommand extends Command
 		$headerProcessed = false;
 		$fields = [];
 		$translations = [];
+		$somethingImported = false;
 		foreach ($rows as $row) {
 			$this->cleanRow($row);
 			if (!$headerProcessed) {
@@ -68,9 +69,13 @@ class ImportTranslationsCommand extends Command
 			}
 			foreach ($fields['langs'] as $lang => $field) {
 				if ($row[$field]) {
+					$somethingImported = true;
 					$this->importOne($row[$fields['identifier']], $row[$field], $lang, $translations);
 				}
 			}
+		}
+		if (!$somethingImported) {
+			throw new TranslationImportException('There are no translations inside \'translations.xlsx\'.');
 		}
 		foreach ($translations as $lang => $files) {
 			foreach ($files as $file => $data) {
