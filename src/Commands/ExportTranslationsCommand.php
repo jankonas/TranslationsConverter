@@ -2,6 +2,7 @@
 
 namespace Apploud\TranslationsConverter\Commands;
 
+use Apploud\TranslationsConverter\Exceptions\TranslationExportException;
 use Nette\Neon\Neon;
 use Nette\Utils\Finder;
 use Symfony\Component\Console\Command\Command;
@@ -48,8 +49,13 @@ class ExportTranslationsCommand extends Command
 			$output->writeLn("<error>\n\n\tThere are no lang files!\n</error>\n");
 			return 1;
 		}
-		$this->generateXlsx($files, $this->langDir . '/translations.xlsx');
-		$output->writeLn("<info>XLSX file generated successfully</info>");
+		try {
+			$this->generateXlsx($files, $this->langDir . '/translations.xlsx');
+			$output->writeLn("<info>XLSX file generated successfully</info>");
+		} catch (TranslationExportException $e) {
+			$output->writeLn("<error>\n\n\t" . $e->getMessage() . "\n</error>\n");
+			return 1;
+		}
 		return 0;
 	}
 
@@ -59,7 +65,11 @@ class ExportTranslationsCommand extends Command
 		$langs = [];
 		$translations = [];
 		foreach ($files as $file => $options) {
-			$contents = $this->flattenArray(Neon::decode(file_get_contents($file)), $options['prefix']);
+			$fileContent = Neon::decode(file_get_contents($file));
+			if ($fileContent === NULL) {
+				continue;
+			}
+			$contents = $this->flattenArray($fileContent, $options['prefix']);
 			$identifiers = array_unique(array_merge($identifiers, array_keys($contents)));
 			$langs[$options['lang']] = $options['lang'];
 			if (array_key_exists($options['lang'], $translations)) {
@@ -67,6 +77,9 @@ class ExportTranslationsCommand extends Command
 			} else {
 				$translations[$options['lang']] = $contents;
 			}
+		}
+		if (!$translations) {
+			throw new TranslationExportException('There are no translations inside lang files!');
 		}
 		$langs = array_values($langs);
 
