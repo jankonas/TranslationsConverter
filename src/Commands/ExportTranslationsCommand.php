@@ -62,7 +62,11 @@ class ExportTranslationsCommand extends Command
 			$contents = $this->flattenArray(Neon::decode(file_get_contents($file)), $options['prefix']);
 			$identifiers = array_unique(array_merge($identifiers, array_keys($contents)));
 			$langs[$options['lang']] = $options['lang'];
-			$translations[$options['lang']] = $contents;
+			if (array_key_exists($options['lang'], $translations)) {
+				$translations[$options['lang']] = array_merge($translations[$options['lang']], $contents);
+			} else {
+				$translations[$options['lang']] = $contents;
+			}
 		}
 		$langs = array_values($langs);
 
