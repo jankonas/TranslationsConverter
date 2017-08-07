@@ -3,3 +3,6 @@ php:
 extensions:
 	console: Kdyby\Console\DI\ConsoleExtension
 	translationsConverter: Apploud\TranslationsConverter\DI\TranslationsConverterExtension
+
+translationsConverter:
+	langDir: %appDir%/lang
