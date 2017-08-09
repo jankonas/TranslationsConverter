@@ -20,12 +20,15 @@ You can enable the extension using your neon config.
 extensions:
 	console: Kdyby\Console\DI\ConsoleExtension
 	translationsConverter: Apploud\TranslationsConverter\DI\TranslationsConverterExtension
+		
+translationsConverter:
+	langDir: %appDir%/lang
 ```
 
 Usage
 ------------
 
-Simply use following commands to export translations into Excel or import into neon files. For now you need to have all language files inside `%appDir%/lang` and Excel file for import has to be named `translations.xlsx`.
+Simply use following commands to export translations into Excel or import into neon files. For now Excel file for import has to be named `translations.xlsx`. Directory with language files needs to be specified as `langDir` in neon config file.
 
 ```sh
 $ php www/index.php translations:export

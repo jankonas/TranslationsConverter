@@ -2,6 +2,7 @@
 
 namespace Apploud\TranslationsConverter\DI;
 
+use Apploud\TranslationsConverter\Exceptions\MissingParameterException;
 use Kdyby\Console\DI\ConsoleExtension;
 use Nette\DI\CompilerExtension;
 use Nette\DI\ServiceDefinition;
@@ -23,9 +24,16 @@ class TranslationsConverterExtension extends CompilerExtension
 
 	protected function getCommandServiceDefinition($commandClass)
 	{
+		$config = $this->getConfig();
+		$msg = "Parameter '%s' must be set in configuration file.";
+
+		if (empty($config['langDir'])) {
+			throw new MissingParameterException(sprintf($msg, 'langDir'));
+		}
+
 		$command = new ServiceDefinition();
 		$command->addTag(ConsoleExtension::TAG_COMMAND);
-		$command->setClass($commandClass, ['appDir' => $this->getContainerBuilder()->parameters['appDir']]);
+		$command->setClass($commandClass, ['langDir' => $config['langDir']]);
 		$command->setInject(false);
 		return $command;
 	}

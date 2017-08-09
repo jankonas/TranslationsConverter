@@ -15,10 +15,10 @@ class ExportTranslationsCommand extends Command
 	/** @var string */
 	protected $langDir;
 
-	public function __construct($appDir)
+	public function __construct($langDir)
 	{
 		parent::__construct();
-		$this->langDir = $appDir . '/lang';
+		$this->langDir = $langDir;
 	}
 
 	protected function configure()
