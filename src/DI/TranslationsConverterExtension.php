@@ -25,7 +25,7 @@ class TranslationsConverterExtension extends CompilerExtension
 	protected function getCommandServiceDefinition($commandClass)
 	{
 		$config = $this->getConfig();
-		$msg = "Parameter '%s' was not set.";
+		$msg = "Parameter '%s' must be set in configuration file.";
 
 		if (empty($config['langDir'])) {
 			throw new MissingParameterException(sprintf($msg, 'langDir'));
