@@ -91,7 +91,7 @@ abstract class BaseTest extends Tester\TestCase
 	protected function getApplicationTester()
 	{
 		if (!$this->applicationTester) {
-			$application = $this->container->getByType('Kdyby\Console\Application');
+			$application = $this->container->getByType('Symfony\Component\Console\Application');
 			$application->setAutoExit(FALSE);
 			$application->add($this->container->getByType('Apploud\TranslationsConverter\Commands\ExportTranslationsCommand'));
 			$application->add($this->container->getByType('Apploud\TranslationsConverter\Commands\ImportTranslationsCommand'));
