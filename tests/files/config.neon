@@ -1,8 +1,10 @@
 php:
 	date.timezone: Europe/Prague
 extensions:
-	console: Kdyby\Console\DI\ConsoleExtension
 	translationsConverter: Apploud\TranslationsConverter\DI\TranslationsConverterExtension
 
 translationsConverter:
 	langDir: %appDir%/lang
+
+services:
+	- Symfony\Component\Console\Application
