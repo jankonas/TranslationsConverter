@@ -8,6 +8,7 @@ use Nette\Utils\Finder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Tracy\Debugger;
 
 class ExportTranslationsCommand extends Command
 {
@@ -54,6 +55,7 @@ class ExportTranslationsCommand extends Command
 			$output->writeLn("<info>XLSX file generated successfully</info>");
 		} catch (TranslationExportException $e) {
 			$output->writeLn("<error>\n\n\t" . $e->getMessage() . "\n</error>\n");
+			Debugger::log($e);
 			return 1;
 		}
 		return 0;

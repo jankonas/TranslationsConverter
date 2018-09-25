@@ -8,6 +8,7 @@ use Nette\Neon\Neon;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Tracy\Debugger;
 
 class ImportTranslationsCommand extends Command
 {
@@ -43,6 +44,7 @@ class ImportTranslationsCommand extends Command
 			$output->writeLn("<info>Translations imported successfully</info>");
 		} catch (TranslationImportException $e) {
 			$output->writeLn("<error>\n\n\t" . $e->getMessage() . "\n</error>\n");
+			Debugger::log($e);
 			return 1;
 		}
 		return 0;
